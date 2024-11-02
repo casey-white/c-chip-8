@@ -10,7 +10,22 @@ int main() {
         printf("Error occured while initializing the video");
     }
 
-    SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
+    u_int8_t temp_buffer[64 * 32];
+
+    memset(&temp_buffer, 0, sizeof(temp_buffer));
+
+
+    int running = 1;
+    SDL_Event event;
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                running = 0;
+            }
+        }
+
+        render_frame(temp_buffer);
+    }
 
     if (cleanup_video() < 0) {
         printf("Error occured while cleaning up the video");
