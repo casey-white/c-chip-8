@@ -1,12 +1,20 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <video.h>
+#include <stdbool.h>
 
 int main() {
     printf("TEST");
-    char display[64 * 32];
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window *window = SDL_CreateWindow("CHIP-8 Emulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 320, SDL_WINDOW_SHOWN);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    if (init_video() < 0) {
+        printf("Error occured while initializing the video");
+    }
+
+    SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
+
+    if (cleanup_video() < 0) {
+        printf("Error occured while cleaning up the video");
+    }
 
     return 0;
 }

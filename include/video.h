@@ -7,6 +7,6 @@ typedef struct {
 
 int init_video(void);
 int render_frame(void);
-int cleanup(void);
+int cleanup_video(void);
 
 #endif
