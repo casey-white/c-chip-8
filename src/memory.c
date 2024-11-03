@@ -1,4 +1,4 @@
-
+#include <string.h>
 
 #define MEMORY_SIZE 4096
 #define MEM_START 0x200
