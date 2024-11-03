@@ -3,6 +3,8 @@
 CC = gcc
 # CFLAGS is compiler options, -Wall -Wextra are both warnings, -std=c99 is the standard being enforced
 CFLAGS = -Wall -Wextra -std=c99 -Iinclude
+# Additional flags for gdb
+DEBUG_FLAGS = -g
 # SDL2 flags from shell
 SDL2_CFLAGS = $(shell sdl2-config --cflags)
 SDL2_LDFLAGS = $(shell sdl2-config --libs)
@@ -33,6 +35,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: clean $(TARGET)
 
 clean:
 	rm -rf $(OBJDIR)
