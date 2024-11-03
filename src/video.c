@@ -21,19 +21,20 @@ int init_video() {
 
     window = SDL_CreateWindow("CHIP-8 Emulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, VIDEO_WIDTH, VIDEO_HEIGHT, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, VIDEO_WIDTH, VIDEO_HEIGHT);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 64, 32);
 
     return error_code;
 }
 
 int render_frame(u_int8_t *video_buffer) {
 
-    u_int32_t color_buffer[VIDEO_WIDTH * VIDEO_HEIGHT];
-    for (int i = 0; i < VIDEO_WIDTH * VIDEO_HEIGHT; ++i) {
+    u_int32_t color_buffer[32 * 64];
+    memset(&color_buffer, 0, 32 * 64 * sizeof(u_int32_t));
+    for (int i = 0; i < 32 * 64; ++i) {
         color_buffer[i] = video_buffer[i] ? TARGET_COLOR : BACKGROUND_COLOR;
     }
 
-    SDL_UpdateTexture(texture, NULL, color_buffer, VIDEO_WIDTH * VIDEO_HEIGHT);
+    SDL_UpdateTexture(texture, NULL, color_buffer, 64 * sizeof(u_int32_t));
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);

@@ -12,7 +12,7 @@ int main() {
 
     u_int8_t temp_buffer[64 * 32];
 
-    memset(&temp_buffer, 0, sizeof(temp_buffer));
+    memset(&temp_buffer, 1, sizeof(temp_buffer));
 
 
     int running = 1;
