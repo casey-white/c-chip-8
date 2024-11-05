@@ -10,7 +10,15 @@ typedef enum {
 
 typedef struct {
     PCActionsType action_type;
-    unsigned char jump_address;
-} PCActions;
+    short jump_address;
+} PCAction;
+
+PCAction create_next_action();
+PCAction create_skip_action();
+PCAction create_step_back_action();
+PCAction create_jump_action(short address);
+
+PCAction clear();
+
 
 #endif
