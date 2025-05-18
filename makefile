@@ -11,7 +11,10 @@ SDL2_LDFLAGS = $(shell sdl2-config --libs)
 # folder names for obj folder and src folder
 OBJDIR = build
 SRCDIR = src
-
+TESTDIR = test
+# Unity source
+UNITY_SRC = $(TESTDIR)/unity.c
+UNITY_OBJ = $(OBJDIR)/unity.o
 # Lists the source files(.c files), wildcard is used to make files in the directory
 SRCS = $(wildcard $(SRCDIR)/*.c)
 # This line automatically generates a list of object files(.o files) 
@@ -20,6 +23,27 @@ OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 # Defines target and source files
 # Name of the final executable
 TARGET = $(OBJDIR)/chip8_emulator
+
+TEST_CPU_DEPEND = test/test_cpu.c test/unity.c src/cpu.c src/memory.c
+TEST_CPU_OUT = test_cpu.out
+
+TEST_MEMORY_DEPEND = test/test_memory.c test/unity.c src/cpu.c src/memory.c
+TEST_MEMORY_OUT = test_memory.out
+
+.PHONY: test_memory.out
+
+test_cpu: $(TEST_CPU_OUT)
+
+$(TEST_CPU_OUT): $(TEST_CPU_DEPEND)
+	$(CC) -Iinclude $^ -o $(TEST_CPU_OUT)
+
+test_memory: $(TEST_MEMORY_OUT)
+
+$(TEST_MEMORY_OUT): $(TEST_MEMORY_DEPEND)
+	$(CC) -Iinclude $^ -o $(TEST_MEMORY_OUT)
+
+# %.out: test/%.c test/unity.c $(SRCS)
+# 	$(CC) -Iinclude $^ -o $@
 
 # Build rules. This is the default rule.
 all: $(TARGET)
@@ -32,6 +56,12 @@ $(TARGET): $(OBJS)
 # $@ and $^
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $(SDL2_CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(TESTDIR)/test_%.c
+	$(CC) $(CFLAGS) $(SDL2_CFLAGS) -c $< -o $@
+
+$(UNITY_OBJ): $(UNITY_SRC)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

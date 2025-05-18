@@ -55,3 +55,5 @@ dkms.conf
 
 chip8_emulator
 build/
+include/unity*
+test/unity*
