@@ -19,7 +19,7 @@ typedef struct {
 typedef struct {
     unsigned short program_counter;
     unsigned char general_registers[16];
-    bool keypad[16];
+    bool* keypad;
     bool video_changed;
     unsigned short stack[16];
     unsigned short index_register;
@@ -29,7 +29,7 @@ typedef struct {
     Memory memory;
 } CPU;
 
-CPU init_cpu();
+CPU init_cpu(bool* keypad);
 
 PCAction create_next_action();
 PCAction create_skip_action();

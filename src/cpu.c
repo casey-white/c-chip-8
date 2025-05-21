@@ -21,14 +21,14 @@ PCAction create_jump_action(unsigned short address) {
     return (PCAction){.action_type = ACTION_JUMP, .jump_address = address};
 }
 
-CPU init_cpu() {
+CPU init_cpu(bool* keypad) {
 
     CPU cpu;
 
     memset(cpu.general_registers, 0, 16 * sizeof(short));
     memset(cpu.stack, 0, 16 * sizeof(short));
-    memset(cpu.keypad, 0, 16 * sizeof(bool));
     cpu.program_counter = 0x200;
+    cpu.keypad = keypad;
     cpu.video_changed = 0;
     cpu.index_register = 0;
     cpu.delay_timer = 0;
