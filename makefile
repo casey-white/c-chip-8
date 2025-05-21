@@ -30,6 +30,9 @@ TEST_CPU_OUT = test_cpu.out
 TEST_MEMORY_DEPEND = test/test_memory.c test/unity.c src/cpu.c src/memory.c
 TEST_MEMORY_OUT = test_memory.out
 
+TEST_KEYPAD_DEPEND = test/test_keypad.c test/unity.c src/keypad.c
+TEST_KEYPAD_OUT = test_keypad.out
+
 .PHONY: test_memory.out
 
 test_cpu: $(TEST_CPU_OUT)
@@ -41,6 +44,11 @@ test_memory: $(TEST_MEMORY_OUT)
 
 $(TEST_MEMORY_OUT): $(TEST_MEMORY_DEPEND)
 	$(CC) -Iinclude $^ -o $(TEST_MEMORY_OUT)
+
+test_keypad: $(TEST_KEYPAD_OUT)
+
+$(TEST_KEYPAD_OUT): $(TEST_KEYPAD_DEPEND)
+	$(CC) -Iinclude $^ $(SDL2_LDFLAGS) -o $(TEST_KEYPAD_OUT)
 
 # %.out: test/%.c test/unity.c $(SRCS)
 # 	$(CC) -Iinclude $^ -o $@

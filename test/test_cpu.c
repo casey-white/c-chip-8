@@ -267,8 +267,6 @@ void test_display() {
     TEST_ASSERT_EQUAL(cpu.memory.video_buffer[4], 0);
     TEST_ASSERT_EQUAL(cpu.memory.video_buffer[5], 0);
 
-
-
 }
 
 int main(void) {
