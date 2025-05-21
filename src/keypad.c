@@ -74,7 +74,6 @@ int poll_keys(SDL_Event* e, bool* keys) {
             }
         }
         if (e->type == SDL_KEYUP) {
-            printf("event is keyup");
             switch (e->key.keysym.sym)
             {
             case SDLK_ESCAPE:
